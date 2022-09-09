@@ -28,7 +28,15 @@ class Character:
 
 class Item:
     def __init__(self, name, price):
-        
+        self.name = name
+        self.price = price
+        self.type = type
+
+class Weapon(Item):
+    def __init__(self, name, price, attack, range=False):
+        Item.__init__(self, name, price)
+        self.attack = attack
+        self.range = range
 
 def main() -> None:
     """ Main entry point for the game """
