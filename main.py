@@ -44,6 +44,9 @@ def main() -> None:
     player = Character(name="Player", health=200)
     shopkeeper = Character(name="Keeper of Shops")
     thief = Character(name="Zaam", attack={"dagger": 20})
+
+    # Create weapons
+    sword = Weapon("Toby", 25, 50)
     print(shopkeeper.name)
     print(shopkeeper.health)
 
