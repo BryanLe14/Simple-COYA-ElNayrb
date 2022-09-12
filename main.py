@@ -37,6 +37,13 @@ class Item:
         self.type = type
         self.quantity = 1
 
+        
+    # method to add quantity to item
+
+
+    #  method to subtract quantity from item
+    
+
 class Weapon(Item):
     def __init__(self, name, price, attack, range=False):
         super().__init__(name, price)
