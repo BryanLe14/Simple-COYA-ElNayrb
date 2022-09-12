@@ -27,6 +27,9 @@ class Character:
         self.charisma = charisma
         self.health = health
 
+    def change_weapon(self, weapon):
+        self.weapon = weapon
+
 class Item:
     def __init__(self, name, price):
         self.name = name
@@ -68,6 +71,7 @@ def main() -> None:
     print(shopkeeper.name)
     print(shopkeeper.weapon.name)
     print(shopkeeper.health)
+    print(thief.weapon.name)
 
     
 
