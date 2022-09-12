@@ -35,6 +35,7 @@ class Item:
         self.name = name
         self.price = price
         self.type = type
+        self.quantity = 1
 
 class Weapon(Item):
     def __init__(self, name, price, attack, range=False):
@@ -72,6 +73,8 @@ def main() -> None:
     print(shopkeeper.weapon.name)
     print(shopkeeper.health)
     print(thief.weapon.name)
+    player.change_weapon(sword)
+    print(player.weapon.name)
 
     
 
