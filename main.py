@@ -81,13 +81,17 @@ def main() -> None:
     thief = Character(name="Zaam", weapon=dagger, health=100)
 
     # Build the world
+    player_char = "☻"
+    location = [12, 5]
+    x = location[0]
+    y = location[1]
     world = [
         "# # # # # # # # # # # #",
         "#                     #",
         "#                     #",
         "#                     #",
         "#                     #",
-        "#         ☻           #",
+        "#           ☻         #",
         "#                     #",
         "#                     #",
         "#                     #",
@@ -95,15 +99,24 @@ def main() -> None:
         "#                     #",
         "# # # # # # # # # # # #",
     ]
+    
     print("\n".join(world))
+
+    for i in range(len(world)):
+        if i == y:
+            print(world[y][:x] + player_char + world[y][(x + 1):])
+        else:
+            print(world[i])
+    
+    # for i in range(len(world)):
+    #     player_indx = world[i].find("☻")
+    #     if player_indx != -1:
+    #         location = [player_indx, i]
+    #         print(location)
+    #         break
     
     # Testing functionality
-    for i in range(len(world)):
-        player_indx = world[i].find("☻")
-        if player_indx != -1:
-            location = [player_indx, i]
-            print(location)
-            break
+    
 
 if __name__ == "__main__":
     """ This is excecuted when the file is run from the command line """
