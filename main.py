@@ -30,31 +30,36 @@ class Character:
     def change_weapon(self, weapon):
         self.weapon = weapon
 
+
 class Item:
+
     def __init__(self, name, price):
         self.name = name
         self.price = price
         self.type = type
-        self.quantity = 1
+        self.quantity = 0
 
-        
-    # method to add quantity to item
-
-
+    # method to change the quantity to item
+    def change_quantity(self, quantity):
+        self.quantity += quantity
     #  method to subtract quantity from item
-    
+
 
 class Weapon(Item):
+
     def __init__(self, name, price, attack, range=False):
         super().__init__(name, price)
         self.attack = attack
         self.range = range
 
+
 class Potion(Item):
+
     def __init__(self, name: str, price: int, effect: str, amount=0):
         super().__init__(name, price)
         self.effect = effect
         self.amount = amount
+
 
 def main() -> None:
     """ Main entry point for the game """
@@ -63,13 +68,13 @@ def main() -> None:
     fist = Weapon("fist", 0, 10)
     dagger = Weapon("Dolly Dagger", 15, 20)
     weapon_list = [sword, fist, dagger]
-    
+
     # Create potions
     health_potion = Potion("Health Potion", 25, "heal", 50)
     poison_potion = Potion("Poison Potion", 35, "poison", 10)
     love_potion = Potion("Love Potion", 50, "love", 25)
     potion_list = [health_potion, poison_potion, love_potion]
-    
+
     #  Create characters, NPCs, and enemies
     player = Character(name="Player", weapon=fist, health=200)
     shopkeeper = Character(name="Keeper of Shops", weapon=sword)
@@ -82,8 +87,9 @@ def main() -> None:
     print(thief.weapon.name)
     player.change_weapon(sword)
     print(player.weapon.name)
-
-    
+    print(love_potion.quantity)
+    love_potion.change_quantity(2)
+    print(love_potion.quantity)
 
 
 if __name__ == "__main__":
