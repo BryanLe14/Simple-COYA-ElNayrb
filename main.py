@@ -80,17 +80,30 @@ def main() -> None:
     shopkeeper = Character(name="Keeper of Shops", weapon=sword)
     thief = Character(name="Zaam", weapon=dagger, health=100)
 
+    # Build the world
+    world = [
+        "# # # # # # # # # # # #",
+        "#                     #",
+        "#                     #",
+        "#                     #",
+        "#                     #",
+        "#         ☻           #",
+        "#                     #",
+        "#                     #",
+        "#                     #",
+        "#                     #",
+        "#                     #",
+        "# # # # # # # # # # # #",
+    ]
+    print("\n".join(world))
+    
     # Testing functionality
-    print(shopkeeper.name)
-    print(shopkeeper.weapon.name)
-    print(shopkeeper.health)
-    print(thief.weapon.name)
-    player.change_weapon(sword)
-    print(player.weapon.name)
-    print(love_potion.quantity)
-    love_potion.change_quantity(2)
-    print(love_potion.quantity)
-
+    for i in range(len(world)):
+        player_indx = world[i].find("☻")
+        if player_indx != -1:
+            location = [player_indx, i]
+            print(location)
+            break
 
 if __name__ == "__main__":
     """ This is excecuted when the file is run from the command line """
