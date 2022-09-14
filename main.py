@@ -17,10 +17,17 @@ Things we need to program:
 __author__ = "Mr. McGarrah's 7th Period"
 __version__ = "0.1"
 
+import os
+
+def clear_screen():
+    if os.name == "nt":
+        os.system("cls")
+    elif os.name == "posix":
+        os.system("clear")
 
 class Character:
 
-    # def __init__(self, name, attack={"fist": 10}, charisma=5, health=100):
+    #def __init__(self, name, attack={"fist": 10}, charisma=5, health=100):
     def __init__(self, name, weapon=None, charisma=5, health=100):
         self.name = name
         self.weapon = weapon
@@ -39,10 +46,11 @@ class Item:
         self.type = type
         self.quantity = 0
 
-    # method to change the quantity to item
+    #method to change the quantity to item
     def change_quantity(self, quantity):
         self.quantity += quantity
-    #  method to subtract quantity from item
+
+    # method to subtract quantity from item
 
 
 class Weapon(Item):
@@ -63,60 +71,86 @@ class Potion(Item):
 
 def main() -> None:
     """ Main entry point for the game """
-    # Create weapons
+    #Create weapons
     sword = Weapon("Toby", 25, 50)
     fist = Weapon("fist", 0, 10)
     dagger = Weapon("Dolly Dagger", 15, 20)
     weapon_list = [sword, fist, dagger]
 
-    # Create potions
+    #Create potions
     health_potion = Potion("Health Potion", 25, "heal", 50)
     poison_potion = Potion("Poison Potion", 35, "poison", 10)
     love_potion = Potion("Love Potion", 50, "love", 25)
     potion_list = [health_potion, poison_potion, love_potion]
 
-    #  Create characters, NPCs, and enemies
+    # Create characters, NPCs, and enemies
     player = Character(name="Player", weapon=fist, health=200)
     shopkeeper = Character(name="Keeper of Shops", weapon=sword)
     thief = Character(name="Zaam", weapon=dagger, health=100)
 
-    # Build the world
+    #Build the world
     player_char = "☻"
-    location = [12, 5]
-    x = location[0]
-    y = location[1]
+    location = [1, 1]
     world = [
-        "# # # # # # # # # # # #",
-        "#                     #",
-        "#                     #",
-        "#                     #",
-        "#                     #",
-        "#           ☻         #",
-        "#                     #",
-        "#                     #",
-        "#                     #",
-        "#                     #",
-        "#                     #",
-        "# # # # # # # # # # # #",
+	    "############",
+        "#          #",
+        "#          #",
+        "#          #",
+        "#          #",
+        "#          #",
+        "#          #",
+        "#          #",
+        "#          #",
+        "#          #",
+        "#          #",
+        "############",
     ]
-    
-    print("\n".join(world))
 
-    for i in range(len(world)):
-        if i == y:
-            print(world[y][:x] + player_char + world[y][(x + 1):])
-        else:
-            print(world[i])
-    
-    # for i in range(len(world)):
-    #     player_indx = world[i].find("☻")
-    #     if player_indx != -1:
-    #         location = [player_indx, i]
-    #         print(location)
-    #         break
-    
-    # Testing functionality
-    
+    #print("\n".join(world))
+
+    while True:
+        clear_screen()
+        
+        x = location[0]
+        y = location[1]
+
+        world_list = [[i for i in x] for x in world]
+        # for i in range(len(world)):
+        #     world_list[i] = 
+        
+        for i in range(len(world)):
+            if i == y:
+                print(world[y][:x] + player_char + world[y][(x + 1):])
+            else:
+                print(world[i])
+
+        direction = input("Direction: ").upper()
+
+        if direction == "W":
+            location[1] -= 1
+        elif direction == "S":
+            location[1] += 1
+        elif direction == "A":
+            location[0] -= 1
+        elif direction == "D":
+            location[0] += 1
+        
+	# for i in range(len(world)):
+	# 	P = world[i].find(player_char)
+	# 	if P == -1:
+	# 		continue
+	# 	else:
+	# 		print(P)
+            
+    #for i in range(len(world)):
+    #    player_indx = world[i].find("☻")
+    #    if player_indx != -1:
+    #        location = [player_indx, i]
+    #        print(location)
+    #        break
+
+    #Testing functionality
+
 
 if __name__ == "__main__":
     """ This is excecuted when the file is run from the command line """
