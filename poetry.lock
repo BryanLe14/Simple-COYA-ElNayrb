@@ -125,6 +125,22 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "functions"
+version = "0.7.0"
+description = "Functional programming in Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "getkey"
+version = "0.6.5"
+description = "Read single characters and key-strokes"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "idna"
 version = "3.3"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -477,7 +493,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "4ceda468c6ce7d0b641f0c244f742d3a912100cd87f29fbe250fdc0a2528f740"
+content-hash = "1fcc9fe5a00a952e5b3167a0d0319ad6c323448fae2a66324c8324c83717f340"
 
 [metadata.files]
 aiohttp = []
@@ -491,6 +507,8 @@ colorama = []
 debugpy = []
 flask = []
 frozenlist = []
+functions = []
+getkey = []
 idna = []
 importlib-metadata = []
 itsdangerous = []
