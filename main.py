@@ -115,6 +115,7 @@ def main() -> None:
         y = location[1]
 
         world_list = [[i for i in x] for x in world]
+        print(world_list)
         # for i in range(len(world)):
         #     world_list[i] = 
         
