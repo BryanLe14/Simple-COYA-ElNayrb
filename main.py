@@ -65,11 +65,11 @@ print(fog_world)
 temp_re = re.compile(r"[^\#]")
 fog_world = [re.sub(temp_re, "/", x) for x in world]
 
-print(fog_world)
+# print(fog_world)
 
 # print(id(world))
 # print(id(fog_world))
-input()
+# input()
 
 key = "BCKLPST" # Boss, Cave, King, Love, Player, Store, Tavern
 items = {}
@@ -82,7 +82,7 @@ for row in range(len(world)):
 
 location = list(items["P"][0])
 
-def main(world, location) -> None:    
+def main(world, fog_world, items, location) -> None:    
     """ Main entry point for the game """
     # Create weapons
     sword = Weapon("Toby", 25, 50)
@@ -103,18 +103,19 @@ def main(world, location) -> None:
 
     while True:
         system("clear")
-        col = location[1]
-        row = location[0]
+        row, col = location
         
-        world = update_ascii_map(world, row, col)
-        print_map(world)
-        world_list = map2dlist(world)
+        fog_world = remove_fog(fog_world, items, location)
+        
+        fog_world = update_ascii_map(fog_world, row, col)
+        print_map(fog_world)
+        world_list = map2dlist(fog_world)
         # print(location)
         
         direction = getkey()
         world_list, location = check_collision(direction, world_list, location)
-        world = list2ascii(world_list)
+        fog_world = list2ascii(world_list)
 
 if __name__ == "__main__":
     """ This is executed when the file is run from the command line """
-    main(world, location)
+    main(world, fog_world, items, location)

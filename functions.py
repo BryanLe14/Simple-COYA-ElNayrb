@@ -66,3 +66,25 @@ def list2ascii(world_list):
         j = "".join(world_list[i])
         temp.append(j)
     return temp
+
+
+"""Add remove_fog function"""
+def remove_fog(map, items, location: list) -> list:
+    """Pass the map and the coordinate of the player as a list. Returns a map with the fog of war removed for the 3x3 grid around the player."""
+    
+    # YOUR CODE GOES HERE
+    row, col = location
+    clist = [[x, y] for x in range(location[0] - 1, location[0] + 2) for y in range(location[1] - 1, location[1] + 2)]
+
+    new_map = [list(row) for row in map]
+
+    for i, row in enumerate(new_map):
+        for j, col in enumerate(row):
+            new_map[i][j] = (" ") if (new_map[i][j] == "/" and [i, j] in clist) else (new_map[i][j])
+
+    map = ["".join(x) for x in new_map]
+    
+    return map
+
+
+
