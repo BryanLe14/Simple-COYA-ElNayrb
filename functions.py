@@ -1,6 +1,7 @@
 from getkey import getkey, keys
+from emoji import emojize
 
-def check_collision(direction, world_list, location):
+def check_collision(direction, world_list, location, items):
     """Checks player movement (WASD) for collisions"""
     row = location[0]
     col = location[1]
@@ -33,6 +34,7 @@ def check_collision(direction, world_list, location):
             world_list[row][col] = "/"
         else:
             location = [row, col]
+    items["P"][0] = location
     return world_list, location
 
 def update_ascii_map(world, row, col):
@@ -72,19 +74,59 @@ def list2ascii(world_list):
 def remove_fog(map, items, location: list) -> list:
     """Pass the map and the coordinate of the player as a list. Returns a map with the fog of war removed for the 3x3 grid around the player."""
     
-    # YOUR CODE GOES HERE
+    # Finds the 3x3 grid around the player
     row, col = location
     clist = [[x, y] for x in range(location[0] - 1, location[0] + 2) for y in range(location[1] - 1, location[1] + 2)]
-
+    
     new_map = [list(row) for row in map]
 
+    # Removes the fog of war from the map
     for i, row in enumerate(new_map):
         for j, col in enumerate(row):
             new_map[i][j] = (" ") if (new_map[i][j] == "/" and [i, j] in clist) else (new_map[i][j])
 
+    # Adds items onto map if discovered
+    for item in items:
+        locations = items[item]
+        # Adds player to fog_world at location
+        if item == "P":
+            row, col = locations[0]
+            new_map[row][col] = "P"
+        # Adds other items to the map if discovered
+        else:
+            for i in range(len(items[item])):
+                row, col = items[item][i]
+                if new_map[row][col] not in "#/P":
+                    new_map[row][col] = item
+
+    # Converts the list back into the string
     map = ["".join(x) for x in new_map]
     
     return map
 
-
+emoji_dict = {
+    "#": ":mountain: ",
+    "/": ":fog: ",
+    "B": "angry_face_with_horns",
+    "C": ":warning: ",
+    "K": ":crown:",
+    "L": ":kiss_mark:",
+    "P": ":smirking_face:",
+    "S": ":shopping_cart:",
+    "H": ":bed: ",
+    "E": ":chequered_flag:",
+}
+def emoji_map(map: "ASCII map") -> "emoji map":
+    """Converts an ASCII map into an emoji map, then prints it to the screen"""
+    em = []
+    for row in range(len(map)):
+        trow = ""
+        for col in range(len(map[row])):
+            c = map[row][col]
+            if c in emoji_dict:
+                trow += emojize(emoji_dict[c])
+            else:
+                trow += "  "
+        em.append(trow)
+    return em
 

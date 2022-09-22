@@ -41,7 +41,7 @@ world = [
         "######################",
         "#    K           S   #",
         "#                    #",
-        "# TP        L        #",
+        "# HP        L        #",
         "#                    #",
         "#    L               #",
         "#                    #",
@@ -55,30 +55,26 @@ world = [
 fog_world = []
 for row in range(len(world)):
     fog_world.append("")
-    for col in range(len(world[row])):
-        if world[row][col] != "#":
-            fog_world[row] += "/"
-        else:
-            fog_world[row] += "#"
-print(fog_world)
+    fog_world[row] = "/" * len(world[row])
 
-temp_re = re.compile(r"[^\#]")
+temp_re = re.compile(r"[\s\S]")
 fog_world = [re.sub(temp_re, "/", x) for x in world]
 
-# print(fog_world)
-
-# print(id(world))
-# print(id(fog_world))
 # input()
 
-key = "BCKLPST" # Boss, Cave, King, Love, Player, Store, Tavern
+"""Add the ability to toggle map reveal"""
+keep_fog_off = False
+if not keep_fog_off:
+    fog = fog_world
+
+key = "BCKLPSHE#" # Boss, Cave, King, Love, Player, Store, Tavern
 items = {}
 for row in range(len(world)):
-    for item in world[row]:
+    for i, item in enumerate(world[row]):
         if item not in items and item in key:
             items[item] = [(row, world[row].index(item))]
         elif item in items:
-            items[item].append((row, world[row].index(item)))
+            items[item].append((row, i))
 
 location = list(items["P"][0])
 
@@ -104,16 +100,22 @@ def main(world, fog_world, items, location) -> None:
     while True:
         system("clear")
         row, col = location
+
+        """Switch between fog modes"""
+        if keep_fog_off:
+            fog_world = remove_fog(fog_world, items, location)
+        else:
+            fog_world = remove_fog(fog, items, location)
         
         fog_world = remove_fog(fog_world, items, location)
         
-        fog_world = update_ascii_map(fog_world, row, col)
+        fog_world = emoji_map(fog_world)
         print_map(fog_world)
         world_list = map2dlist(fog_world)
         # print(location)
         
         direction = getkey()
-        world_list, location = check_collision(direction, world_list, location)
+        world_list, location = check_collision(direction, world_list, location, items)
         fog_world = list2ascii(world_list)
 
 if __name__ == "__main__":
