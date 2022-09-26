@@ -1,11 +1,14 @@
 from getkey import getkey, keys
-from emoji import emojize
+from emoji import emojize, is_emoji
 
 def check_collision(direction, world_list, location, items):
     """Checks player movement (WASD) for collisions"""
     row = location[0]
     col = location[1]
 
+    # print(world_list[row-1][col])
+    # input()
+    
     if direction.upper() == "W" or direction == keys.UP:
         if world_list[row-1][col] != "#":
             location = [row-1, col]
@@ -35,7 +38,7 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]
     items["P"][0] = location
-    return world_list, location
+    return world_list, location, items
 
 def update_ascii_map(world, row, col):
     """Updates the player position on the map"""
@@ -104,10 +107,10 @@ def remove_fog(map, items, location: list) -> list:
     
     return map
 
-emoji_dict = {
+map_key = {
     "#": ":mountain: ",
     "/": ":fog: ",
-    "B": "angry_face_with_horns",
+    "B": ":angry_face_with_horns:",
     "C": ":warning: ",
     "K": ":crown:",
     "L": ":kiss_mark:",
@@ -122,11 +125,16 @@ def emoji_map(map: "ASCII map") -> "emoji map":
     for row in range(len(map)):
         trow = ""
         for col in range(len(map[row])):
-            c = map[row][col]
-            if c in emoji_dict:
-                trow += emojize(emoji_dict[c])
+            symbol = map[row][col]
+            if symbol in map_key.keys():
+                symbol = emojize(map_key[symbol])
+                if not(is_emoji(symbol) or is_emoji(symbol[:-1])):
+                    symbol = emojize(":red_exclamation_mark:")
+            elif symbol == " ":
+                symbol = "  "
             else:
-                trow += "  "
+                symbol = emojize(":red_question_mark:")
+            trow += symbol
         em.append(trow)
     return em
 
