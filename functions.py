@@ -108,13 +108,13 @@ def remove_fog(map, items, location: list) -> list:
     return map
 
 map_key = {
-    "#": ":mountain: ",
-    "/": ":fog: ",
+    "#": ":brick:",
+    "/": ":cloud: ",
     "B": ":angry_face_with_horns:",
     "C": ":warning: ",
     "K": ":crown:",
-    "L": ":kiss_mark:",
-    "P": ":smirking_face:",
+    "L": ":heart_decoration:",
+    "P": ":bust_in_silhouette:",
     "S": ":shopping_cart:",
     "H": ":bed: ",
     "E": ":chequered_flag:",
