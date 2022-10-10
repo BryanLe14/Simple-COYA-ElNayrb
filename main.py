@@ -34,7 +34,9 @@ from os import system
 from functions import *
 from classes import *
 from getkey import getkey, keys
-import re
+import time
+from universal_globals import (width, height, width2, height2, floorwidth2, floorheight2, clear_screen, constrain, enter_to_continue)
+
 
 # World map and player starting location
 world = [
@@ -52,23 +54,13 @@ world = [
         "######################"
     ]
 # Makes a fog world map
-# fog_world = []
-# for row in range(len(world)):
-#     fog_world.append("")
-#     fog_world[row] = "/" * len(world[row])
-
-# temp_re = re.compile(r"[\s\S]")
-# fog_world = [re.sub(temp_re, "/", x) for x in world]
 fog_world = ["/" * len(x) for x in world]
-
-# input()
 
 """Add the ability to toggle map reveal"""
 keep_fog_off = False
 if not keep_fog_off:
     fog = fog_world
 
-# key = "BCKLPSHE#" # Boss, Cave, King, Love, Player, Store, Tavern
 items = {}
 for row in range(len(world)):
     for i, item in enumerate(world[row]):
@@ -77,13 +69,30 @@ for row in range(len(world)):
         elif item in items:
             items[item].append((row, i))
 
-# print(items)
-# input()
-
 location = list(items["P"][0])
 
 def main(world, fog_world, items, location) -> None:    
     """ Main entry point for the game """
+    while True:
+        print("Love and Legends")
+        print("""
+
+        """)
+        print("[S]tart New Game")
+        print("[C]ontinue Old Game")
+        start = input("> ")
+        if start.upper() == "S":
+            player = create_player()
+            break
+        elif start.upper() == "C":
+            print("Load game code will go here")
+            print("Press [C] to continue")
+            input()
+            break
+        clear_screen()
+
+
+        
     # Create weapons
     sword = Weapon("Toby", 25, 50)
     fist = Weapon("fist", 0, 10)
@@ -97,10 +106,11 @@ def main(world, fog_world, items, location) -> None:
     potion_list = [health_potion, poison_potion, love_potion]
     
     # Create characters, NPCs, and enemies
-    player = Character(name  = "Trevor", weapon = fist, health = 200)
-    shopkeeper = Character(name = "Keeper of Shops", weapon = sword)
-    thief = Character(name = "Zaam", weapon = dagger, health = 100)
-
+    name = "Trevor"
+    gender = "male"
+    attraction = "female"
+    player = Player(name, gender, attraction)
+    
     while True:
         system("clear")
         row, col = location
@@ -124,3 +134,10 @@ def main(world, fog_world, items, location) -> None:
 if __name__ == "__main__":
     """ This is executed when the file is run from the command line """
     main(world, fog_world, items, location)
+    # import shop
+    # store = shop.Shop([
+    #     # [name, cost, supply]
+    #     ['sword', 1000, 1],
+    #     ['arrows', 10, 100000],
+    # ])
+    # store.buy()

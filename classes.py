@@ -1,14 +1,32 @@
-class Character:
-    # def __init__(self, name, attack = {"fist":10}, charisma = 5, health = 100):
-    def __init__(self, name, weapon = None, charisma = 5, health = 100):
+class Player:
+    # def __init__(self, name, attack = {"fist":10}, love = 5, health = 100):
+    def __init__(self, name, gender, attr, gold=15, fame=5, love = 5, weapon = None, health = 100, inventory=[], gen=1):
         self.name = name
+        self.gender = gender
+        self.attr = attr
+        self.gold = gold
+        self.fame = fame
+        self.love = love
         self.weapon = weapon
-        self.charisma = charisma
         self.health = health
+        self.gen = gen
+        self.inventory = inventory
 
     def change_weapon(self, weapon):
         self.weapon = weapon
-
+        
+    def update_inventory_item(self, name, amount):
+        if name in self.inventory:
+            self.inventory[name] += amount
+        else:
+            self.inventory.update({name: amount})
+    
+    
+    def set_inventory_item(self, name, amount):
+        if name in self.inventory:
+            self.inventory[name] = amount
+        else:
+            self.inventory.update({name: amount})
 
 class Item:
     def __init__(self, name, price):

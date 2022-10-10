@@ -1,5 +1,9 @@
 from getkey import getkey, keys
 from emoji import emojize, is_emoji
+import time
+from universal_globals import (width, height, width2, height2, floorwidth2, floorheight2, clear_screen, constrain, enter_to_continue)
+from classes import Player
+
 
 def check_collision(direction, world_list, location, items):
     """Checks player movement (WASD) for collisions"""
@@ -8,6 +12,12 @@ def check_collision(direction, world_list, location, items):
 
     # print(world_list[row-1][col])
     # input()
+
+    if world_list[row][col] == "S":
+        """interact with shop"""
+        choice = input("Do you want to enter the shop?\n> ")
+        if choice.upper().find("Y") != -1:
+            input()
     
     if direction.upper() == "W" or direction == keys.UP:
         if world_list[row-1][col] != "#":
@@ -38,6 +48,7 @@ def check_collision(direction, world_list, location, items):
         else:
             location = [row, col]
     items["P"][0] = location
+    time.sleep(0.2)
     return world_list, location, items
 
 def update_ascii_map(world, row, col):
@@ -138,3 +149,34 @@ def emoji_map(map: "ASCII map") -> "emoji map":
         em.append(trow)
     return em
 
+def create_player():
+    clear_screen()
+    while True:
+        name = input("Character Name: ")
+        if len(name) > 19:
+            clear_screen()
+            print("Please enter a name that is less than 19 characters")
+        break
+    while True:
+        gender = input("Male or Female? ")
+        if gender[0].upper() == "M":
+            gender = "male"
+            break
+        elif gender[0].upper() == "F":
+            gender = "female"
+            break
+        else:
+            clear_screen()
+            print("Please enter male or female")
+    while True:
+        attraction = input("Attracted to Male or Female? ")
+        if attraction[0].upper() == "M":
+            attraction = "male"
+            break
+        elif attraction[0].upper() == "F":
+            attraction = "female"
+            break
+        else:
+            clear_screen()
+            print("Please enter male or female")
+    return Player(name, gender, attraction)
